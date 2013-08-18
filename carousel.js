@@ -89,8 +89,19 @@ jQuery(document).ready(function($) {
 	}
 	
 	// Button Click Navigation function (BNav 1/1)
-	function goDirect() {
-		
+	function goDirectTo(event) {
+		// Remove all active classes first...
+		$(".jscript-nav-button").removeClass("button-active");
+		// Get rel attribute number so you can link to the image number in carousel
+		count = $(event).attr("rel");
+		//Then change the image, yo
+		console.log('button navigation clicked');
+		$(".jscript-image, .jscript-title").removeClass("jscript-active");
+		console.log('button navigation active class removed');
+		$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
+		console.log('button navigation active class added');
+		// Remember to put that button class in after everything is done!
+		$(event).addClass("button-active");		
 	}
 	
 	// Hover on and off functions (HoverToggle 1/1)
@@ -116,9 +127,9 @@ jQuery(document).ready(function($) {
 			goBackward();
 		});
 		// Button Click Navigation function
-		//$("#jscript-right").on("click", function(){
-			
-		//});
+		$(".jscript-nav-button").on("click", function(event){
+			goDirectTo(this);
+		});
 		// Timer start/stop on hover function
 		$(".jscript-content,.jscript-image,.jscript-title,.jscript-nav,.jscript-nav-button").on({
 			mouseenter: function(){ stopOnHover(); },
@@ -152,12 +163,12 @@ jQuery(document).ready(function($) {
 		if (count >= 1 || count <= total) { goForward(); }
 		else { count = 1; }
 	};
-
-	// Call all .on() event handlers
-	initEvents();
 	
 	// Create Navigational Buttons based on how many images there are in #jscript-content.
 	createNavButtons();
+	
+	// Call all .on() event handlers
+	initEvents();
 	
 	// Declare active classes after everything has loaded
 	initDefaults();
@@ -165,24 +176,4 @@ jQuery(document).ready(function($) {
 	// Call the timer only after defaults have been set!
 	// Timer calls timerFunc() with a interval time of intervalTimer (see above)
 	var timer = setInterval(function(){ timerFunc(); }, intervalTimer);
-	
-	///////////////////////////////////////////
-	// Still needs to do fadein fadeout here //
-	///////////////////////////////////////////
-	
-	// Button Navigation Click function (Step BCLICK 1/1)
-	$(".jscript-nav-button").click(function() {
-		// Remove all active classes first...
-		$(".jscript-nav-button").removeClass("button-active");
-		// Get rel attribute number so you can link to the image number in carousel
-		count = $(this).attr("rel");
-		//Then change the image, yo
-		console.log('button navigation clicked');
-		$(".jscript-image, .jscript-title").removeClass("jscript-active");
-		console.log('button navigation active class removed');
-		$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
-		console.log('button navigation active class added');
-		// Remember to put that button class in after everything is done!
-		$(this).addClass("button-active");		
-	});
 });
