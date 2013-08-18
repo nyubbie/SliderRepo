@@ -4,7 +4,10 @@ jQuery(document).ready(function($) {
 	
 	// Declare global variables
 	var intervalTimer = 5000, 
-		fadeInOutTimer = 1000;
+		fadeInOutTimer = 1000,
+	// Start from 1 'cos the prev/next button will go to the last in row or second set
+		count = 1,
+		total = $('.jscript-image').length;
 	
 	// Hover function for Carousel
 	$(".jscript-image").hover(
@@ -25,15 +28,15 @@ jQuery(document).ready(function($) {
 		// Hover off
 		function(){	$(".jscript-nav").css("visibility", "hidden");	}
 	);	
-	// Start from 1 'cos the prev/next button will go to the last in row or second set [DECLARE VARIABLES]
-	var count = 1,
-		total = $('.jscript-image').length;
+
 
 	// Click Navigation (LEFT/RIGHT) function
 	$("#jscript-right").click(function() {
 		// Remove all active classes
 
 		console.log('starting fade OUT');
+		console.log('turning all events OFF');
+		$("#jscript-right, #jscript-left, .jscript-nav-button").off();
 			$(".jscript-active").fadeOut(fadeInOutTimer, function(){
 				$(".jscript-image, .jscript-title").removeClass("jscript-active");
 				// Tell me that its faded out
@@ -59,6 +62,8 @@ jQuery(document).ready(function($) {
 					$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
 					// Tell me that its faded in
 					console.log('faded IN');
+					console.log('turning all events ON');
+					$("#jscript-right, #jscript-left, .jscript-nav-button").on();
 				});
 				// Finished fade in ^
 			});
