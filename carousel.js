@@ -95,23 +95,24 @@ jQuery(document).ready(function($) {
 	
 	// Create a function for all .on() event handlers
 	function initEvents() {
+		// On hover on any part of the slider (except navigation buttons), show navigation arrows
 		$(".jscript-image, .jscript-title, .jscript-nav").on({
 			mouseenter: function(){hoverOn();},
 			mouseleave: function(){hoverOff();}
+		});
+		// Left/Right Click Navigation function
+		$("#jscript-right").on("click", function(){
+			goForward();
+		});
+		$("#jscript-left").on("click", function(){
+			goBackward();
 		});
 	}
 
 	// Call all .on() event handlers
 	initEvents();
 	
-	// Left/Right Click Navigation function
-	$("#jscript-right").click(function() {
-		goForward();
-	});
-	$("#jscript-left").click(function() {
-		goBackward();
-	});
-	
+	// NOTE : THIS Step NAV area is only done once! Consider using .one() instead.
 	// If there are images (Step NAV 1/2)
 	if ($('.jscript-image').length) {
 		// Create a navigation button box
