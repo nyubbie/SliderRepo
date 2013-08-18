@@ -92,30 +92,10 @@ jQuery(document).ready(function($) {
 	function hoverOn() { $(".jscript-nav").css("visibility", "visible"); }
 	function hoverOff() { $(".jscript-nav").css("visibility", "hidden"); }
 	
-	$(".jscript-image").on({
+	$(".jscript-image, .jscript-title, .jscript-nav").on({
 		mouseenter: hoverOn(),
 		mouseleave: hoverOff()
 	});
-	
-	// Hover function for Carousel
-	$(".jscript-image").hover(
-		// Hover on
-		function(){	$(".jscript-nav").css("visibility", "visible"); },
-		// Hover off
-		function(){	$(".jscript-nav").css("visibility", "hidden");  }
-	);
-	$(".jscript-title").hover(
-		// Hover on
-		function(){	$(".jscript-nav").css("visibility", "visible");	},
-		// Hover off
-		function(){	$(".jscript-nav").css("visibility", "hidden");	}
-	);
-	$(".jscript-nav").hover(
-		// Hover on
-		function(){	$(".jscript-nav").css("visibility", "visible");	},
-		// Hover off
-		function(){	$(".jscript-nav").css("visibility", "hidden");	}
-	);	
 
 	// Click Navigation (LEFT/RIGHT) function
 	$("#jscript-right").click(function() {
