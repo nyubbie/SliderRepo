@@ -89,15 +89,22 @@ jQuery(document).ready(function($) {
 		});	
 	}
 	
+	// Hover on and off functions
 	function hoverOn() { $(".jscript-nav").css("visibility", "visible"); }
 	function hoverOff() { $(".jscript-nav").css("visibility", "hidden"); }
 	
-	$(".jscript-image, .jscript-title, .jscript-nav").on({
-		mouseenter: function(){hoverOn();},
-		mouseleave: function(){hoverOff();}
-	});
+	// Create a function for all .on() event handlers
+	function initEvents() {
+		$(".jscript-image, .jscript-title, .jscript-nav").on({
+			mouseenter: function(){hoverOn();},
+			mouseleave: function(){hoverOff();}
+		});
+	}
 
-	// Click Navigation (LEFT/RIGHT) function
+	// Call all .on() event handlers
+	initEvents();
+	
+	// Left/Right Click Navigation function
 	$("#jscript-right").click(function() {
 		goForward();
 	});
@@ -116,6 +123,10 @@ jQuery(document).ready(function($) {
 		var nextInt = i + 1;
 		$('#jscript-nav-box').append('<a rel="'+ nextInt +'" class="jscript-nav-button">'+ nextInt +'</a>');
 	});
+	
+	///////////////////////////////////////////
+	// Still needs to do fadein fadeout here //
+	///////////////////////////////////////////
 	
 	// Button Navigation Click function (Step BCLICK 1/1)
 	$(".jscript-nav-button").click(function() {
