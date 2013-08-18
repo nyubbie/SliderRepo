@@ -113,17 +113,22 @@ jQuery(document).ready(function($) {
 	initEvents();
 	
 	// NOTE : THIS Step NAV area is only done once! Consider using .one() instead.
-	// If there are images (Step NAV 1/2)
-	if ($('.jscript-image').length) {
-		// Create a navigation button box
-		$('#jscript-content').after('<div id="jscript-nav-box"></div>');
-	};
-	// Get every '.jscript-image' in the DOM (Step NAV 2/2)
-	$('.jscript-image').each(function(i){
-		// Make 'i' into a number because doing .append(... i + 1 ...) gives you 01, 11, 21 on the html document.
-		var nextInt = i + 1;
-		$('#jscript-nav-box').append('<a rel="'+ nextInt +'" class="jscript-nav-button">'+ nextInt +'</a>');
-	});
+	// NOTE : .one() not possible, because its not a event handler -- climbing up the wrong tree again.
+	//      : Just call createNavButtons() once.
+	function createNavButtons() {
+		// If there are images (Step NAV 1/2)
+		if ($('.jscript-image').length) {
+			// Create a navigation button box
+			$('#jscript-content').after('<div id="jscript-nav-box"></div>');
+		};
+		// Get every '.jscript-image' in the DOM (Step NAV 2/2)
+		$('.jscript-image').each(function(i){
+			// Make 'i' into a number because doing .append(... i + 1 ...) gives you 01, 11, 21 on the html document.
+			var nextInt = i + 1;
+			$('#jscript-nav-box').append('<a rel="'+ nextInt +'" class="jscript-nav-button">'+ nextInt +'</a>');
+		});
+	}
+	
 	
 	///////////////////////////////////////////
 	// Still needs to do fadein fadeout here //
