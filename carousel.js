@@ -17,7 +17,7 @@ jQuery(document).ready(function($) {
 		count = 1,
 		total = $('.jscript-image').length;
 	
-	// Function to go forward
+	// Function to go forward (LRNav 1/2)
 	function goForward() {
 		// Fade out old image
 		console.log('starting fade OUT');
@@ -52,8 +52,7 @@ jQuery(document).ready(function($) {
 			// Finished fade in ^
 		});
 	}
-	
-	// Function to go backward
+	// Function to go backward (LRNav 2/2)
 	function goBackward() {
 		// Fade out old image
 		console.log('starting fade OUT');
@@ -89,16 +88,36 @@ jQuery(document).ready(function($) {
 		});	
 	}
 	
+	// Button Click Navigation function (BNav 1/1)
+	function goDirect() {
+		// Remove all active classes first...
+		$(".jscript-nav-button").removeClass("button-active");
+		// Get rel attribute number so you can link to the image number in carousel
+		count = $(this).attr("rel");
+		//Then change the image, yo
+		console.log('button navigation clicked');
+		$(".jscript-image, .jscript-title").removeClass("jscript-active");
+		console.log('button navigation active class removed');
+		$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
+		console.log('button navigation active class added');
+		// Remember to put that button class in after everything is done!
+		$(this).addClass("button-active");
+	}
+	
 	// Hover on and off functions
 	function hoverOn() { $(".jscript-nav").css("visibility", "visible"); }
 	function hoverOff() { $(".jscript-nav").css("visibility", "hidden"); }
+	
+	// Timer Hover on and off functions
+	function stopOnHover() { clearInterval(timer); console.log("stopped"); }
+	function startOnHoverOff() { timer = setInterval(function() {timerFunc()},intervalTimer); console.log("started"); }
 	
 	// Create a function for all .on() event handlers
 	function initEvents() {
 		// On hover on any part of the slider (except navigation buttons), show navigation arrows
 		$(".jscript-image, .jscript-title, .jscript-nav").on({
-			mouseenter: function(){hoverOn();},
-			mouseleave: function(){hoverOff();}
+			mouseenter: function(){ hoverOn(); },
+			mouseleave: function(){ hoverOff(); }
 		});
 		// Left/Right Click Navigation function
 		$("#jscript-right").on("click", function(){
@@ -107,14 +126,13 @@ jQuery(document).ready(function($) {
 		$("#jscript-left").on("click", function(){
 			goBackward();
 		});
+		
+		$(".jscript-content,.jscript-image,.jscript-title,.jscript-nav,.jscript-nav-button").on({
+			mouseenter: function(){ stopOnHover(); },
+			mouseleave: function(){ startOnHoverOff(); }
+		});
 	}
-
-	// Call all .on() event handlers
-	initEvents();
-	
-	// NOTE : THIS Step NAV area is only done once! Consider using .one() instead.
-	// NOTE : .one() not possible, because its not a event handler -- climbing up the wrong tree again.
-	//      : Just call createNavButtons() once.
+		
 	function createNavButtons() {
 		// If there are images (Step NAV 1/2)
 		if ($('.jscript-image').length) {
@@ -128,7 +146,32 @@ jQuery(document).ready(function($) {
 			$('#jscript-nav-box').append('<a rel="'+ nextInt +'" class="jscript-nav-button">'+ nextInt +'</a>');
 		});
 	}
+
+	// Declare active classes after everything has loaded
+	function initDefaults() {
+		console.log(count + ' starting count');
+		$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
+		$(".jscript-nav-button[rel="+count+"]").addClass("button-active");
+	}
+
+	// Timer Function
+	function timerFunc() {
+		if (count >= 1 || count <= total) { goForward(); }
+		else { count = 1; }
+	};
+
+	// Call all .on() event handlers
+	initEvents();
 	
+	// Create Navigational Buttons based on how many images there are in #jscript-content.
+	createNavButtons();
+	
+	// Declare active classes after everything has loaded
+	initDefaults();
+	
+	// Call the timer only after defaults have been set!
+	// Timer calls timerFunc() with a interval time of intervalTimer (see above)
+	var timer = setInterval(function(){ timerFunc(); }, intervalTimer);
 	
 	///////////////////////////////////////////
 	// Still needs to do fadein fadeout here //
@@ -149,30 +192,4 @@ jQuery(document).ready(function($) {
 		// Remember to put that button class in after everything is done!
 		$(this).addClass("button-active");
 	});
-	
-	// Timer Function
-	function timerFunc() {
-		if (count >= 1 || count <= total) { 
-			goForward();
-		}
-		else { count = 1; }
-	};
-	
-	// Timer
-	var timer = setInterval(function(){timerFunc();},intervalTimer);
-	
-	// Declare active class after everything has loaded
-	console.log(count + ' starting count');
-	$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
-	$(".jscript-nav-button[rel="+count+"]").addClass("button-active");
-	
-	// Stop on Hover
-	$(".jscript-content,.jscript-image,.jscript-title,.jscript-nav,.jscript-nav-button").hover(function(){
-			clearInterval(timer);
-			console.log("stopped");
-		}, function(){
-			timer = setInterval(function() {timerFunc()},intervalTimer);
-			console.log("started");
-		}
-	);
 });
