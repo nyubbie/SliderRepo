@@ -93,8 +93,8 @@ jQuery(document).ready(function($) {
 	function hoverOff() { $(".jscript-nav").css("visibility", "hidden"); }
 	
 	$(".jscript-image, .jscript-title, .jscript-nav").on({
-		mouseenter: hoverOn(),
-		mouseleave: hoverOff()
+		mouseenter: function(){hoverOn();},
+		mouseleave: function(){hoverOff();}
 	});
 
 	// Click Navigation (LEFT/RIGHT) function
