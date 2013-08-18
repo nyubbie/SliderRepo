@@ -2,12 +2,100 @@ jQuery(document).ready(function($) {
 	
 	// THIS SLIDER STARTS FROM 1, NOT 0
 	
+	// NOTE : YOU NEED TO DECLARE FUNCTIONS
+	
+	//console.log('turning all events OFF');
+	//$("#jscript-right, #jscript-left, .jscript-nav-button").off();
+	
+	//console.log('turning all events ON');
+	//$("#jscript-right, #jscript-left, .jscript-nav-button").on();
+	
 	// Declare global variables
 	var intervalTimer = 5000, 
 		fadeInOutTimer = 1000,
 	// Start from 1 'cos the prev/next button will go to the last in row or second set
 		count = 1,
 		total = $('.jscript-image').length;
+	
+	// Function to go forward
+	function goForward() {
+		// Fade out old image
+		console.log('starting fade OUT');
+		$(".jscript-active").fadeOut(fadeInOutTimer, function(){
+			// Remove all active classes [title, image]
+			$(".jscript-image, .jscript-title").removeClass("jscript-active");
+			// Tell me that its faded out
+			console.log('faded OUT');
+		})
+		// Finished fade out ^
+		// promise().done() function tells fadeIn() (below) to wait till fadeOut() (above) is done 
+		.promise().done(function(){
+			// Retacked remove button nav to after fade out has finished for a more smoother flow
+			// Remove all active classes [button navigation]
+			$(".jscript-nav-button").removeClass("button-active");
+			console.log(count + ' right click before');
+			
+			count++; 
+			if (count > total) {count = 1; console.log('count reset to 1');} 
+			else if (count <= 0) {count = total; console.log('count reset to total');}
+			
+			console.log(count + ' right click after');
+			// Fade In new image
+			console.log('starting fade IN');
+			//Add Button Nav first
+			$(".jscript-nav-button[rel="+count+"]").addClass("button-active");
+			$("#featured-image-"+count+", #featured-title-"+count).fadeIn(fadeInOutTimer, function(){
+				$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
+				// Tell me that its faded in
+				console.log('faded IN');
+			});
+			// Finished fade in ^
+		});
+	}
+	
+	// Function to go backward
+	function goBackward() {
+		// Fade out old image
+		console.log('starting fade OUT');
+		$(".jscript-active").fadeOut(fadeInOutTimer, function(){
+			// Remove all active classes [title, image]
+			$(".jscript-image, .jscript-title").removeClass("jscript-active");
+			// Tell me that its faded out
+			console.log('faded OUT');
+		})
+		// Finished fade out ^
+		// promise().done() function tells fadeIn() (below) to wait till fadeOut() (above) is done 
+		.promise().done(function(){
+			// Retacked remove button nav to after fade out has finished for a more smoother flow
+			// Remove all active classes [button navigation]
+			$(".jscript-nav-button").removeClass("button-active");
+			console.log(count + ' left click before');
+			
+			count--; 
+			if (count > total) {count = 1; console.log('count reset to 1');} 
+			else if (count <= 0) {count = total; console.log('count reset to total');}
+			
+			console.log(count + ' left click after');
+			// Fade In new image
+			console.log('starting fade IN');
+			//Add Button Nav first
+			$(".jscript-nav-button[rel="+count+"]").addClass("button-active");
+			$("#featured-image-"+count+", #featured-title-"+count).fadeIn(fadeInOutTimer, function(){
+				$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
+				// Tell me that its faded in
+				console.log('faded IN');
+			});
+			// Finished fade in ^
+		});	
+	}
+	
+	function hoverOn() { $(".jscript-nav").css("visibility", "visible"); }
+	function hoverOff() { $(".jscript-nav").css("visibility", "hidden"); }
+	
+	$(".jscript-image").on({
+		mouseenter: hoverOn(),
+		mouseleave: hoverOff()
+	});
 	
 	// Hover function for Carousel
 	$(".jscript-image").hover(
@@ -29,99 +117,17 @@ jQuery(document).ready(function($) {
 		function(){	$(".jscript-nav").css("visibility", "hidden");	}
 	);	
 
-
 	// Click Navigation (LEFT/RIGHT) function
 	$("#jscript-right").click(function() {
-		// Remove all active classes
-
-		console.log('starting fade OUT');
-		console.log('turning all events OFF');
-		$("#jscript-right, #jscript-left, .jscript-nav-button").off();
-			$(".jscript-active").fadeOut(fadeInOutTimer, function(){
-				$(".jscript-image, .jscript-title").removeClass("jscript-active");
-				// Tell me that its faded out
-				console.log('faded OUT');
-			})
-			// Finished fade out ^
-			// promise().done() function tells fadeIn() (below) to wait till fadeOut() (above) is done 
-			.promise().done(function(){
-				// Retacked remove button nav to after fade out has finished for a more smoother flow
-				$(".jscript-nav-button").removeClass("button-active");
-				console.log(count + ' right click before');
-				
-				count++; 
-				if (count > total) {count = 1; console.log('count reset to 1');} 
-				else if (count <= 0) {count = total; console.log('count reset to total');}
-				
-				console.log(count + ' right click after');
-				// Fade In new image
-				console.log('starting fade IN');
-				//Add Button Nav first
-				$(".jscript-nav-button[rel="+count+"]").addClass("button-active");
-				$("#featured-image-"+count+", #featured-title-"+count).fadeIn(fadeInOutTimer, function(){
-					$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
-					// Tell me that its faded in
-					console.log('faded IN');
-					console.log('turning all events ON');
-					$("#jscript-right, #jscript-left, .jscript-nav-button").on();
-				});
-				// Finished fade in ^
-			});
-
-
-		//$(".jscript-image, .jscript-title").removeClass("jscript-active");
-		//$(".jscript-nav-button").removeClass("button-active");
-		//console.log(count + ' right click before');
-		//count++; if (count > total) {count = 1;} else if (count <= 0) {count = total;}
-		//console.log(count + ' right click after');
-		//$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
-		//$(".jscript-nav-button[rel="+count+"]").addClass("button-active");
+		goForward();
 	});
 	$("#jscript-left").click(function() {
-		// Remove all active classes
-		
-		console.log('starting fade OUT');
-			$(".jscript-active").fadeOut(fadeInOutTimer, function(){
-				$(".jscript-image, .jscript-title").removeClass("jscript-active");
-				// Tell me that its faded out
-				console.log('faded OUT');
-			})
-			// Finished fade out ^
-			// promise().done() function tells fadeIn() (below) to wait till fadeOut() (above) is done 
-			.promise().done(function(){
-				// Retacked remove button nav to after fade out has finished for a more smoother flow
-				$(".jscript-nav-button").removeClass("button-active");
-				console.log(count + ' left click before');
-				
-				count--; 
-				if (count > total) {count = 1; console.log('count reset to 1');} 
-				else if (count <= 0) {count = total; console.log('count reset to total');}
-				
-				console.log(count + ' left click after');
-				// Fade In new image
-				console.log('starting fade IN');
-				//Add Button Nav first
-				$(".jscript-nav-button[rel="+count+"]").addClass("button-active");
-				$("#featured-image-"+count+", #featured-title-"+count).fadeIn(fadeInOutTimer, function(){
-					$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
-					// Tell me that its faded in
-					console.log('faded IN');
-				});
-				// Finished fade in ^
-			});
-		
-		
-		//$(".jscript-image, .jscript-title").removeClass("jscript-active");
-		//$(".jscript-nav-button").removeClass("button-active");
-		//console.log(count + ' left click before');
-		// Add to count, but reset to first image or last image if higher or lower than count
-		//count--; if (count > total) {count = 1;} else if (count <= 0) {count = total;}
-		//console.log(count + ' left click after');
-		//$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
-		//$(".jscript-nav-button[rel="+count+"]").addClass("button-active");
+		goBackward();
 	});
+	
 	// If there are images (Step NAV 1/2)
 	if ($('.jscript-image').length) {
+		// Create a navigation button box
 		$('#jscript-content').after('<div id="jscript-nav-box"></div>');
 	};
 	// Get every '.jscript-image' in the DOM (Step NAV 2/2)
@@ -150,45 +156,12 @@ jQuery(document).ready(function($) {
 	// Timer Function
 	function timerFunc() {
 		if (count >= 1 || count <= total) { 
-			// Fade out old image
-			console.log('starting fade OUT');
-			$(".jscript-active").fadeOut(fadeInOutTimer, function(){
-				$(".jscript-image, .jscript-title").removeClass("jscript-active");
-				// Tell me that its faded out
-				console.log('faded OUT');
-			})
-			// Finished fade out ^
-			// promise().done() function tells fadeIn() (below) to wait till fadeOut() (above) is done 
-			.promise().done(function(){
-				// Retacked remove button nav to after fade out has finished for a more smoother flow
-				$(".jscript-nav-button").removeClass("button-active");
-				console.log(count + ' timer before');
-				
-				// Add to count to move on to next image
-				count++;
-				
-				// Catch any numbers that are 0 (or below), or more than total.
-				if (count > total) {count = 1; console.log('count reset to 1');}
-				else if (count <= 0) {count = total; console.log('count reset to total');}
-				else {console.log('error, numbers out of range!');}
-				
-				console.log(count + ' timer after');
-				// Fade In new image
-				console.log('starting fade IN');
-				//Add Button Nav first
-				$(".jscript-nav-button[rel="+count+"]").addClass("button-active");
-				$("#featured-image-"+count+", #featured-title-"+count).fadeIn(fadeInOutTimer, function(){
-					$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
-					// Tell me that its faded in
-					console.log('faded IN');
-				});
-				// Finished fade in ^
-			});
+			goForward();
 		}
 		else { count = 1; }
 	};
 	
-	// Timer currently 8000
+	// Timer
 	var timer = setInterval(function(){timerFunc();},intervalTimer);
 	
 	// Declare active class after everything has loaded
