@@ -2,7 +2,9 @@ jQuery(document).ready(function($) {
 	
 	// THIS SLIDER STARTS FROM 1, NOT 0
 	
-	// NOTE : YOU NEED TO DECLARE FUNCTIONS
+	/////////////////////////////////////////////////////////////////
+	// YOU STILL NEED TO MAKE THE TIMER STOP WHEN ANIMATION STARTS //
+	/////////////////////////////////////////////////////////////////
 	
 	//console.log('turning all events OFF');
 	//$("#jscript-right, #jscript-left, .jscript-nav-button").off();
@@ -19,6 +21,8 @@ jQuery(document).ready(function($) {
 	
 	// Function to go forward (LRNav 1/2)
 	function goForward() {
+		// Stop user from clicking any other navigation stuff
+		destroyEvents();
 		// Fade out old image
 		console.log('starting fade OUT');
 		$(".jscript-active").fadeOut(fadeInOutTimer, function(){
@@ -49,12 +53,20 @@ jQuery(document).ready(function($) {
 				$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
 				// Tell me that its faded in
 				console.log('faded IN');
+			})
+			// Make another sweet, lovely promise to finish everything first plz!
+			.promise().done(function(){
+				// Re-initalize everything
+				initEvents();
+				console.log('events reinitialized');
 			});
 			// Finished fade in ^
 		});
 	}
 	// Function to go backward (LRNav 2/2)
 	function goBackward() {
+		// Stop user from clicking any other navigation stuff
+		destroyEvents();
 		// Fade out old image
 		console.log('starting fade OUT');
 		$(".jscript-active").fadeOut(fadeInOutTimer, function(){
@@ -85,6 +97,12 @@ jQuery(document).ready(function($) {
 				$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
 				// Tell me that its faded in
 				console.log('faded IN');
+			})
+			// Make another sweet, lovely promise to finish everything first plz!
+			.promise().done(function(){
+				// Re-initalize everything
+				initEvents();
+				console.log('events reinitialized');
 			});
 			// Finished fade in ^
 		});	
@@ -92,6 +110,8 @@ jQuery(document).ready(function($) {
 	
 	// Button Click Navigation function (BNav 1/1)
 	function goDirectTo(element) {
+		// Stop user from clicking any other navigation stuff
+		destroyEvents();
 		// Fade out old image
 		console.log('starting fade OUT');
 		$(".jscript-active").fadeOut(fadeInOutTimer, function(){
@@ -120,6 +140,12 @@ jQuery(document).ready(function($) {
 				$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
 				// Tell me that its faded in
 				console.log('faded IN');
+			})
+			// Make another sweet, lovely promise to finish everything first plz!
+			.promise().done(function(){
+				// Re-initalize everything
+				initEvents();
+				console.log('events reinitialized');
 			});
 			// Finished fade in ^
 		});	
@@ -131,8 +157,22 @@ jQuery(document).ready(function($) {
 	
 	// Timer Hover on and off functions (TimerToggle 1/1)
 	function stopOnHover() { clearInterval(timer); console.log("stopped"); }
-	function startOnHoverOff() { timer = setInterval(function() {timerFunc()},intervalTimer); console.log("started"); }
-	
+	function startOnHoverOff() { timer = setInterval(function() { timerFunc(); },intervalTimer); console.log("started"); }
+		
+	function createNavButtons() {
+		// If there are images (Step NAV 1/2)
+		if ($('.jscript-image').length) {
+			// Create a navigation button box
+			$('#jscript-content').after('<div id="jscript-nav-box"></div>');
+		};
+		// Get every '.jscript-image' in the DOM (Step NAV 2/2)
+		$('.jscript-image').each(function(i){
+			// Make 'i' into a number because doing .append(... i + 1 ...) gives you 01, 11, 21 on the html document.
+			var nextInt = i + 1;
+			$('#jscript-nav-box').append('<a rel="'+ nextInt +'" class="jscript-nav-button">'+ nextInt +'</a>');
+		});
+	}
+
 	// Create a function for all .on() event handlers
 	function initEvents() {
 		// On hover on any part of the slider (except navigation buttons), show navigation arrows
@@ -157,19 +197,10 @@ jQuery(document).ready(function($) {
 			mouseleave: function(){ startOnHoverOff(); }
 		});
 	}
-		
-	function createNavButtons() {
-		// If there are images (Step NAV 1/2)
-		if ($('.jscript-image').length) {
-			// Create a navigation button box
-			$('#jscript-content').after('<div id="jscript-nav-box"></div>');
-		};
-		// Get every '.jscript-image' in the DOM (Step NAV 2/2)
-		$('.jscript-image').each(function(i){
-			// Make 'i' into a number because doing .append(... i + 1 ...) gives you 01, 11, 21 on the html document.
-			var nextInt = i + 1;
-			$('#jscript-nav-box').append('<a rel="'+ nextInt +'" class="jscript-nav-button">'+ nextInt +'</a>');
-		});
+	
+	function destroyEvents() {
+		$("#jscript-right, #jscript-left, .jscript-nav-button").off();
+		console.log('event destroyed');
 	}
 
 	// Declare active classes after everything has loaded
