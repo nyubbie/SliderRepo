@@ -90,25 +90,14 @@ jQuery(document).ready(function($) {
 	
 	// Button Click Navigation function (BNav 1/1)
 	function goDirect() {
-		// Remove all active classes first...
-		$(".jscript-nav-button").removeClass("button-active");
-		// Get rel attribute number so you can link to the image number in carousel
-		count = $(this).attr("rel");
-		//Then change the image, yo
-		console.log('button navigation clicked');
-		$(".jscript-image, .jscript-title").removeClass("jscript-active");
-		console.log('button navigation active class removed');
-		$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
-		console.log('button navigation active class added');
-		// Remember to put that button class in after everything is done!
-		$(this).addClass("button-active");
+		
 	}
 	
-	// Hover on and off functions
+	// Hover on and off functions (HoverToggle 1/1)
 	function hoverOn() { $(".jscript-nav").css("visibility", "visible"); }
 	function hoverOff() { $(".jscript-nav").css("visibility", "hidden"); }
 	
-	// Timer Hover on and off functions
+	// Timer Hover on and off functions (TimerToggle 1/1)
 	function stopOnHover() { clearInterval(timer); console.log("stopped"); }
 	function startOnHoverOff() { timer = setInterval(function() {timerFunc()},intervalTimer); console.log("started"); }
 	
@@ -126,7 +115,11 @@ jQuery(document).ready(function($) {
 		$("#jscript-left").on("click", function(){
 			goBackward();
 		});
-		
+		// Button Click Navigation function
+		//$("#jscript-right").on("click", function(){
+			
+		//});
+		// Timer start/stop on hover function
 		$(".jscript-content,.jscript-image,.jscript-title,.jscript-nav,.jscript-nav-button").on({
 			mouseenter: function(){ stopOnHover(); },
 			mouseleave: function(){ startOnHoverOff(); }
@@ -190,6 +183,6 @@ jQuery(document).ready(function($) {
 		$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
 		console.log('button navigation active class added');
 		// Remember to put that button class in after everything is done!
-		$(this).addClass("button-active");
+		$(this).addClass("button-active");		
 	});
 });
