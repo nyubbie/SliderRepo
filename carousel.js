@@ -35,6 +35,7 @@ jQuery(document).ready(function($) {
 			$(".jscript-nav-button").removeClass("button-active");
 			console.log(count + ' right click before');
 			
+			// Plus 'coz you wanna go forward
 			count++; 
 			if (count > total) {count = 1; console.log('count reset to 1');} 
 			else if (count <= 0) {count = total; console.log('count reset to total');}
@@ -70,6 +71,7 @@ jQuery(document).ready(function($) {
 			$(".jscript-nav-button").removeClass("button-active");
 			console.log(count + ' left click before');
 			
+			// Minus 'coz you wanna go backwards
 			count--; 
 			if (count > total) {count = 1; console.log('count reset to 1');} 
 			else if (count <= 0) {count = total; console.log('count reset to total');}
@@ -90,8 +92,6 @@ jQuery(document).ready(function($) {
 	
 	// Button Click Navigation function (BNav 1/1)
 	function goDirectTo(element) {
-		// Remove all active classes first...
-		//$(".jscript-nav-button").removeClass("button-active");
 		// Fade out old image
 		console.log('starting fade OUT');
 		$(".jscript-active").fadeOut(fadeInOutTimer, function(){
@@ -122,20 +122,7 @@ jQuery(document).ready(function($) {
 				console.log('faded IN');
 			});
 			// Finished fade in ^
-		});
-		
-		
-		
-		// Get rel attribute number so you can link to the image number in carousel
-		//count = $(element).attr("rel");
-		//Then change the image, yo
-		//console.log('button navigation clicked');
-		//$(".jscript-image, .jscript-title").removeClass("jscript-active");
-		//console.log('button navigation active class removed');
-		//$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
-		//console.log('button navigation active class added');
-		// Remember to put that button class in after everything is done!
-		//$(element).addClass("button-active");		
+		});	
 	}
 	
 	// Hover on and off functions (HoverToggle 1/1)
