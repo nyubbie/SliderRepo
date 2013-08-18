@@ -89,19 +89,53 @@ jQuery(document).ready(function($) {
 	}
 	
 	// Button Click Navigation function (BNav 1/1)
-	function goDirectTo(event) {
+	function goDirectTo(element) {
 		// Remove all active classes first...
-		$(".jscript-nav-button").removeClass("button-active");
+		//$(".jscript-nav-button").removeClass("button-active");
+		// Fade out old image
+		console.log('starting fade OUT');
+		$(".jscript-active").fadeOut(fadeInOutTimer, function(){
+			// Remove all active classes [title, image]
+			$(".jscript-image, .jscript-title").removeClass("jscript-active");
+			// Tell me that its faded out
+			console.log('faded OUT');
+		})
+		// Finished fade out ^
+		// promise().done() function tells fadeIn() (below) to wait till fadeOut() (above) is done 
+		.promise().done(function(){
+			// Retacked remove button nav to after fade out has finished for a more smoother flow
+			// Remove all active classes [button navigation]
+			$(".jscript-nav-button").removeClass("button-active");
+			console.log(count + ' right click before');
+			
+			// Get rel attribute number so you can link to the image number in carousel
+			count = $(element).attr("rel");
+			
+			console.log(count + ' right click after');
+			// Fade In new image
+			console.log('starting fade IN');
+			//Add Button Nav first
+			$(".jscript-nav-button[rel="+count+"]").addClass("button-active");
+			$("#featured-image-"+count+", #featured-title-"+count).fadeIn(fadeInOutTimer, function(){
+				$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
+				// Tell me that its faded in
+				console.log('faded IN');
+			});
+			// Finished fade in ^
+		});
+		
+		
+		
 		// Get rel attribute number so you can link to the image number in carousel
-		count = $(event).attr("rel");
+		//count = $(element).attr("rel");
 		//Then change the image, yo
-		console.log('button navigation clicked');
-		$(".jscript-image, .jscript-title").removeClass("jscript-active");
-		console.log('button navigation active class removed');
-		$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
-		console.log('button navigation active class added');
+		//console.log('button navigation clicked');
+		//$(".jscript-image, .jscript-title").removeClass("jscript-active");
+		//console.log('button navigation active class removed');
+		//$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
+		//console.log('button navigation active class added');
 		// Remember to put that button class in after everything is done!
-		$(event).addClass("button-active");		
+		//$(element).addClass("button-active");		
 	}
 	
 	// Hover on and off functions (HoverToggle 1/1)
