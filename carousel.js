@@ -53,14 +53,14 @@ jQuery(document).ready(function($) {
 				$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
 				// Tell me that its faded in
 				console.log('faded IN');
-			})
-			// Make another sweet, lovely promise to finish everything first plz!
-			.promise().done(function(){
+				// Finished fade in ^
+			// Adding another .promise() to wait till everything has ended
+			}).promise().done(function(){
 				// Re-initalize everything
-				initEvents();
+				reInitEvents();
 				console.log('events reinitialized');
 			});
-			// Finished fade in ^
+			
 		});
 	}
 	// Function to go backward (LRNav 2/2)
@@ -97,14 +97,14 @@ jQuery(document).ready(function($) {
 				$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
 				// Tell me that its faded in
 				console.log('faded IN');
-			})
-			// Make another sweet, lovely promise to finish everything first plz!
-			.promise().done(function(){
+				// Finished fade in ^
+			// Adding another .promise() to wait till everything has ended
+			}).promise().done(function(){
 				// Re-initalize everything
-				initEvents();
+				reInitEvents();
 				console.log('events reinitialized');
 			});
-			// Finished fade in ^
+			
 		});	
 	}
 	
@@ -140,14 +140,14 @@ jQuery(document).ready(function($) {
 				$("#featured-image-"+count+", #featured-title-"+count).addClass("jscript-active");
 				// Tell me that its faded in
 				console.log('faded IN');
-			})
-			// Make another sweet, lovely promise to finish everything first plz!
-			.promise().done(function(){
+				// Finished fade in ^
+			// Adding another .promise() to wait till everything has ended
+			}).promise().done(function(){
 				// Re-initalize everything
-				initEvents();
+				reInitEvents();
 				console.log('events reinitialized');
 			});
-			// Finished fade in ^
+			
 		});	
 	}
 	
@@ -195,6 +195,26 @@ jQuery(document).ready(function($) {
 		$(".jscript-content,.jscript-image,.jscript-title,.jscript-nav,.jscript-nav-button").on({
 			mouseenter: function(){ stopOnHover(); },
 			mouseleave: function(){ startOnHoverOff(); }
+		});
+	}
+	
+	// Creating a separating re-initialization function
+	function reInitEvents() {
+		// On hover on any part of the slider (except navigation buttons), show navigation arrows
+		$(".jscript-image, .jscript-title, .jscript-nav").on({
+			mouseenter: function(){ hoverOn(); },
+			mouseleave: function(){ hoverOff(); }
+		});
+		// Left/Right Click Navigation function
+		$("#jscript-right").on("click", function(){
+			goForward();
+		});
+		$("#jscript-left").on("click", function(){
+			goBackward();
+		});
+		// Button Click Navigation function
+		$(".jscript-nav-button").on("click", function(event){
+			goDirectTo(this);
 		});
 	}
 	
