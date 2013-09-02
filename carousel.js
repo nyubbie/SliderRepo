@@ -2,10 +2,6 @@ jQuery(document).ready(function($) {
 	
 	// THIS SLIDER STARTS FROM 1, NOT 0
 	
-	/////////////////////////////////////////////////////////////////
-	// YOU STILL NEED TO MAKE THE TIMER STOP WHEN ANIMATION STARTS //
-	/////////////////////////////////////////////////////////////////
-	
 	//console.log('turning all events OFF');
 	//$("#jscript-right, #jscript-left, .jscript-nav-button").off();
 	
@@ -21,8 +17,6 @@ jQuery(document).ready(function($) {
 	
 	// Function to go forward (LRNav 1/2)
 	function goForward() {
-		// Stop user from clicking any other navigation stuff
-		destroyEvents();
 		// Fade out old image
 		console.log('starting fade OUT');
 		$(".jscript-active").fadeOut(fadeInOutTimer, function(){
@@ -65,8 +59,6 @@ jQuery(document).ready(function($) {
 	}
 	// Function to go backward (LRNav 2/2)
 	function goBackward() {
-		// Stop user from clicking any other navigation stuff
-		destroyEvents();
 		// Fade out old image
 		console.log('starting fade OUT');
 		$(".jscript-active").fadeOut(fadeInOutTimer, function(){
@@ -110,8 +102,6 @@ jQuery(document).ready(function($) {
 	
 	// Button Click Navigation function (BNav 1/1)
 	function goDirectTo(element) {
-		// Stop user from clicking any other navigation stuff
-		destroyEvents();
 		// Fade out old image
 		console.log('starting fade OUT');
 		$(".jscript-active").fadeOut(fadeInOutTimer, function(){
@@ -182,13 +172,19 @@ jQuery(document).ready(function($) {
 		});
 		// Left/Right Click Navigation function
 		$("#jscript-right").on("click", function(){
+			// Stop user from clicking any other navigation stuff
+			destroyEvents();
 			goForward();
 		});
 		$("#jscript-left").on("click", function(){
+			// Stop user from clicking any other navigation stuff
+			destroyEvents();
 			goBackward();
 		});
 		// Button Click Navigation function
 		$(".jscript-nav-button").on("click", function(event){
+			// Stop user from clicking any other navigation stuff
+			destroyEvents();
 			goDirectTo(this);
 		});
 		// Timer start/stop on hover function
@@ -207,13 +203,19 @@ jQuery(document).ready(function($) {
 		});
 		// Left/Right Click Navigation function
 		$("#jscript-right").on("click", function(){
+			// Stop user from clicking any other navigation stuff
+			destroyEvents();
 			goForward();
 		});
 		$("#jscript-left").on("click", function(){
+			// Stop user from clicking any other navigation stuff
+			destroyEvents();
 			goBackward();
 		});
 		// Button Click Navigation function
 		$(".jscript-nav-button").on("click", function(event){
+			// Stop user from clicking any other navigation stuff
+			destroyEvents();
 			goDirectTo(this);
 		});
 	}
